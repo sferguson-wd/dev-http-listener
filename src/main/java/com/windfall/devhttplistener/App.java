@@ -46,7 +46,7 @@ public class App extends NanoHTTPD
             request.put("_requestType", session.getMethod());
 
             Map<String, List<String>> parameters = session.getParameters();
-            request.put("_queryParameters", parameters);
+            request.put("_parameters", parameters);
 
             logger.debug("Request parameters: {}", parameters);
 
