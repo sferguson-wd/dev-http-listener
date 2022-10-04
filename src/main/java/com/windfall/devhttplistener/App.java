@@ -20,6 +20,7 @@ public class App extends NanoHTTPD
     private static int DEFAULT_PORT = 8080;
     private static int PORT = ENV_PORT == null ? DEFAULT_PORT : Integer.parseInt(ENV_PORT);
     private static String DEFAULT_MIME_TYPE = "application/json";
+    private static String RESPONSE_OVERRIDE = System.getenv("DEV_RESPONSE_OVERRIDE");
 
     public App() throws IOException {
         super(PORT);
@@ -38,6 +39,10 @@ public class App extends NanoHTTPD
     @Override
     public Response serve(final IHTTPSession session) {
         logger.info("Received {} request from {}", session.getMethod(), session.getRemoteIpAddress());
+
+        if (RESPONSE_OVERRIDE != null) {
+            return newFixedLengthResponse(RESPONSE_OVERRIDE);
+        }
 
         Response response;
         final Map<String, Object> request = new HashMap<>();
